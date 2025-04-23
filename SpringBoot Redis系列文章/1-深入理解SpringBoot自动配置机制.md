@@ -181,7 +181,7 @@ private static Map<String, List<String>> loadSpringFactories(@Nullable ClassLoad
 
 ### 3.5 条件注解解析
 
-很多开发者会误以为条件注解是在加载`spring.factories`文件时就被解析应用的，但实际上，条件注解的解析和应用发生在自动配置的后期阶段。让我们看看条件注解究竟在何时被解析和应用：
+条件注解的解析和应用发生在自动配置的后期阶段。让我们看看条件注解究竟在何时被解析和应用：
 
 1. **加载候选配置类后**：首先，通过`SpringFactoriesLoader`从`spring.factories`文件加载所有候选的自动配置类。此时，仅仅是将这些类的全限定名加载到内存中，并未实例化，也未应用任何条件判断。
 
