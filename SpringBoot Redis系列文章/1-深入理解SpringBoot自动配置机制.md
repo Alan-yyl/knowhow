@@ -161,6 +161,83 @@ private static Map<String, List<String>> loadSpringFactories(@Nullable ClassLoad
 }
 ```
 
+### 3.4 自动配置中的类排除机制
+
+在SpringBoot的自动配置过程中，除了加载必要的配置类外，还需要根据特定条件排除一些配置类。以下是实现这一机制的关键步骤：
+
+1. **去重处理**：
+   - 首先，SpringBoot会对从`spring.factories`文件中加载的配置类进行去重处理，以确保每个配置类只被加载一次。
+
+2. **获取排除列表**：
+   - SpringBoot会通过`@EnableAutoConfiguration`注解的`exclude`和`excludeName`属性，以及`application.properties`中的`spring.autoconfigure.exclude`属性，获取需要排除的配置类列表。
+
+3. **验证排除类的有效性**：
+   - 在排除配置类之前，SpringBoot会检查这些类是否在候选配置类列表中存在，以确保排除操作的有效性。
+
+4. **移除排除类**：
+   - 最后，SpringBoot会从候选配置类列表中移除所有需要排除的类，确保只有符合条件的配置类被加载到Spring容器中。
+
+通过这些步骤，SpringBoot能够灵活地控制自动配置类的加载过程，避免不必要的配置类被加载，从而提高应用的启动效率和灵活性。
+
+### 3.5 条件注解解析
+
+很多开发者会误以为条件注解是在加载`spring.factories`文件时就被解析应用的，但实际上，条件注解的解析和应用发生在自动配置的后期阶段。让我们看看条件注解究竟在何时被解析和应用：
+
+1. **加载候选配置类后**：首先，通过`SpringFactoriesLoader`从`spring.factories`文件加载所有候选的自动配置类。此时，仅仅是将这些类的全限定名加载到内存中，并未实例化，也未应用任何条件判断。
+
+2. **在过滤阶段应用**：在`AutoConfigurationImportSelector`的`getAutoConfigurationEntry`方法中，当调用`filter`方法时，条件注解才真正开始被解析和应用：
+
+   ```java
+   // 根据条件过滤配置类
+   configurations = filter(configurations, autoConfigurationMetadata);
+   ```
+
+3. **过滤方法的实现**：`filter`方法的实现大致如下：
+
+   ```java
+   List<String> filter(List<String> configurations) {
+       String[] candidates = StringUtils.toStringArray(configurations);
+       boolean skipped = false;
+       // 获取所有AutoConfigurationImportFilter实现
+       for (AutoConfigurationImportFilter filter : this.filters) {
+           // 对每个配置类应用filter的match方法
+           boolean[] match = filter.match(candidates, this.autoConfigurationMetadata);
+           for (int i = 0; i < match.length; i++) {
+               if (!match[i]) {
+                   candidates[i] = null;
+                   skipped = true;
+               }
+           }
+       }
+       // 移除不满足条件的配置类
+       if (!skipped) {
+           return configurations;
+       }
+       List<String> result = new ArrayList<>(candidates.length);
+       for (String candidate : candidates) {
+           if (candidate != null) {
+               result.add(candidate);
+           }
+       }
+       return result;
+   }
+   ```
+
+4. **主要的条件过滤器**：SpringBoot使用三种主要的`AutoConfigurationImportFilter`实现来处理不同类型的条件注解：
+
+   - **OnClassCondition**：处理`@ConditionalOnClass`和`@ConditionalOnMissingClass`注解
+   - **OnWebApplicationCondition**：处理`@ConditionalOnWebApplication`和`@ConditionalOnNotWebApplication`注解
+   - **OnBeanCondition**：处理`@ConditionalOnBean`、`@ConditionalOnMissingBean`和`@ConditionalOnSingleCandidate`注解
+
+5. **条件评估的阶段**：需要注意的是，某些条件注解（如`@ConditionalOnBean`）可以根据`ConfigurationPhase`配置在不同阶段被评估：
+
+   - **PARSE_CONFIGURATION阶段**：在解析`@Configuration`类时进行评估
+   - **REGISTER_BEAN阶段**：在添加普通（非`@Configuration`）bean时进行评估
+
+这解释了为什么某些条件注解可能会依赖于已经注册的bean，如果理解不当，可能导致意外结果。理解条件注解的解析时机，有助于我们更好地使用自动配置机制，并在开发自定义自动配置类时避免常见陷阱。
+
+
+
 ## 4. 条件注解体系
 
 自动配置类通常使用条件注解来控制是否应该被加载。这些条件注解是自动配置的核心，确保只有在满足特定条件时才会创建相应的Bean。
@@ -192,8 +269,8 @@ SpringBoot提供了多种预定义的条件注解，用于不同场景：
 
 #### 基于类路径的条件：
 
-- `@ConditionalOnClass`：当指定的类存在于类路径时生效
-- `@ConditionalOnMissingClass`：当指定的类不存在于类路径时生效
+- `@ConditionalOnClass`：当指定的类存在于类路径下时生效
+- `@ConditionalOnMissingClass`：当指定的类不存在于类路径下时生效
 
 ```java
 @Configuration
@@ -241,6 +318,7 @@ public RedisConnectionFactory redisConnectionFactory() {
 ### 4.3 条件评估的顺序
 
 条件注解的评估是有顺序的，SpringBoot使用`@Order`注解来控制条件的优先级。优先级越高的条件越先评估，如果条件不满足，就会快速失败，避免不必要的计算。
+
 
 ## 5. 自动配置的排序与过滤
 
