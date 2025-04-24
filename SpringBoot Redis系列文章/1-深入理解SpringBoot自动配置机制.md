@@ -237,7 +237,6 @@ private static Map<String, List<String>> loadSpringFactories(@Nullable ClassLoad
 这解释了为什么某些条件注解可能会依赖于已经注册的bean，如果理解不当，可能导致意外结果。理解条件注解的解析时机，有助于我们更好地使用自动配置机制，并在开发自定义自动配置类时避免常见陷阱。
 
 
-
 ## 4. 条件注解体系
 
 自动配置类通常使用条件注解来控制是否应该被加载。这些条件注解是自动配置的核心，确保只有在满足特定条件时才会创建相应的Bean。
@@ -254,6 +253,9 @@ public @interface Conditional {
     Class<? extends Condition>[] value();
 }
 ```
+value属性接收一个或多个实现了Condition接口的类：
+- 类型：Class<? extends Condition>[]（Condition接口的实现类数组）
+- 作用：指定判断条件的实现逻辑
 
 `Condition`接口只有一个方法：
 
@@ -262,6 +264,8 @@ public interface Condition {
     boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata);
 }
 ```
+- matches方法返回true时，条件满足，Bean会被创建
+- matches方法返回false时，条件不满足，Bean不会被创建
 
 ### 4.2 SpringBoot提供的条件注解
 
@@ -279,6 +283,7 @@ public class RedisAutoConfiguration {
     // 配置内容...
 }
 ```
+当RedisOperations类存在于类路径下，RedisAutoConfiguration类才会生效。
 
 #### 基于Bean的条件：
 
@@ -293,19 +298,23 @@ public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisC
     // 创建RedisTemplate...
 }
 ```
-
+当redisTemplate Bean不存在时，才会创建新的RedisTemplate Bean。
 #### 基于属性的条件：
 
 - `@ConditionalOnProperty`：当指定的属性满足条件时生效
 
 ```java
 @Bean
-@ConditionalOnProperty(prefix = "spring.redis", name = "host")
-public RedisConnectionFactory redisConnectionFactory() {
-    // 创建RedisConnectionFactory...
+@ConditionalOnProperty(name = "feature.enabled", havingValue = "true", matchIfMissing = false)
+public FeatureService featureService() {
+   return new FeatureService();
 }
 ```
+- 如果feature.enabled属性不存在，Bean不会被创建（matchIfMissing = false，默认不启用）
+- 如果feature.enabled=true，Bean会被创建
+- 如果feature.enabled=false，Bean不会被创建（明确禁用）
 
+这样设计可以实现"默认开启，可选关闭"的功能特性。
 #### 其他条件：
 
 - `@ConditionalOnWebApplication`：当应用程序是Web应用时生效
@@ -318,7 +327,6 @@ public RedisConnectionFactory redisConnectionFactory() {
 ### 4.3 条件评估的顺序
 
 条件注解的评估是有顺序的，SpringBoot使用`@Order`注解来控制条件的优先级。优先级越高的条件越先评估，如果条件不满足，就会快速失败，避免不必要的计算。
-
 
 ## 5. 自动配置的排序与过滤
 
