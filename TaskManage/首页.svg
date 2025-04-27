@@ -1,0 +1,38 @@
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="390" height="844" fill="#F7F8FA"/>
+  <rect x="0" y="0" width="390" height="140" rx="24" fill="url(#paint0_linear)"/>
+  <text x="50%" y="60" text-anchor="middle" font-size="32" font-family="SF Pro Display, Arial" font-weight="bold" fill="#222">我的项目</text>
+  <rect x="95" y="90" width="200" height="44" rx="22" fill="url(#paint1_linear)"/>
+  <text x="195" y="120" text-anchor="middle" font-size="18" font-family="SF Pro Display, Arial" font-weight="bold" fill="#fff">+ 新建/导入Excel项目</text>
+  <!-- 卡片1 -->
+  <rect x="20" y="170" width="350" height="90" rx="18" fill="#fff" filter="url(#shadow)"/>
+  <text x="40" y="200" font-size="20" font-family="SF Pro Display, Arial" font-weight="bold" fill="#222">🗂️ 学习计划</text>
+  <text x="40" y="225" font-size="15" font-family="SF Pro Display, Arial" fill="#888">共12个任务</text>
+  <rect x="40" y="235" width="120" height="8" rx="4" fill="#43e97b"/>
+  <text x="170" y="243" font-size="14" font-family="SF Pro Display, Arial" fill="#43e97b">60%</text>
+  <!-- 卡片2 -->
+  <rect x="20" y="270" width="350" height="90" rx="18" fill="#fff" filter="url(#shadow)"/>
+  <text x="40" y="300" font-size="20" font-family="SF Pro Display, Arial" font-weight="bold" fill="#222">🗂️ 工作任务</text>
+  <text x="40" y="325" font-size="15" font-family="SF Pro Display, Arial" fill="#888">共8个任务</text>
+  <rect x="40" y="335" width="80" height="8" rx="4" fill="#43e97b"/>
+  <text x="130" y="343" font-size="14" font-family="SF Pro Display, Arial" fill="#43e97b">40%</text>
+  <!-- 卡片3 -->
+  <rect x="20" y="370" width="350" height="90" rx="18" fill="#fff" filter="url(#shadow)"/>
+  <text x="40" y="400" font-size="20" font-family="SF Pro Display, Arial" font-weight="bold" fill="#222">🗂️ 生活清单</text>
+  <text x="40" y="425" font-size="15" font-family="SF Pro Display, Arial" fill="#888">共20个任务</text>
+  <rect x="40" y="435" width="160" height="8" rx="4" fill="#43e97b"/>
+  <text x="210" y="443" font-size="14" font-family="SF Pro Display, Arial" fill="#43e97b">80%</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="0" y1="0" x2="390" y2="140" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a8edea"/>
+      <stop offset="1" stop-color="#fed6e3"/>
+    </linearGradient>
+    <linearGradient id="paint1_linear" x1="95" y1="90" x2="295" y2="134" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#43e97b"/>
+      <stop offset="1" stop-color="#38f9d7"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="390" height="844" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#b4b4b4" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+</svg>

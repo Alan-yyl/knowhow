@@ -1,0 +1,21 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="400" fill="#f7f8fa"/>
+  <rect x="30" y="40" width="340" height="320" rx="22" fill="#fff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="200" y="80" text-anchor="middle" font-size="24" font-family="-apple-system,Arial" font-weight="bold" fill="#222">任务详情</text>
+  <text x="60" y="120" font-size="18" font-family="-apple-system,Arial" font-weight="bold" fill="#222">记单词</text>
+  <text x="60" y="150" font-size="16" font-family="-apple-system,Arial" fill="#444">项目：雅思备考</text>
+  <text x="60" y="180" font-size="16" font-family="-apple-system,Arial" fill="#444">日期：2025/04/27</text>
+  <text x="60" y="210" font-size="16" font-family="-apple-system,Arial" fill="#444">优先级：高</text>
+  <text x="60" y="240" font-size="16" font-family="-apple-system,Arial" fill="#444">进度：0%</text>
+  <text x="60" y="270" font-size="16" font-family="-apple-system,Arial" fill="#444">备注：打卡&amp;签到</text>
+  <rect x="90" y="310" width="90" height="36" rx="16" fill="url(#paint0_linear)"/>
+  <text x="135" y="334" text-anchor="middle" font-size="16" font-family="-apple-system,Arial" font-weight="bold" fill="#fff">编辑</text>
+  <rect x="220" y="310" width="90" height="36" rx="16" fill="#ff4d4f"/>
+  <text x="265" y="334" text-anchor="middle" font-size="16" font-family="-apple-system,Arial" font-weight="bold" fill="#fff">删除</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="90" y1="310" x2="180" y2="346" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#43e97b"/>
+      <stop offset="1" stop-color="#38f9d7"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -1,0 +1,24 @@
+<svg width="400" height="380" viewBox="0 0 400 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="380" fill="#f7f8fa"/>
+  <rect x="30" y="40" width="340" height="300" rx="22" fill="#fff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="200" y="80" text-anchor="middle" font-size="24" font-family="-apple-system,Arial" font-weight="bold" fill="#222">筛选任务</text>
+  <text x="60" y="120" font-size="16" font-family="-apple-system,Arial" fill="#444">日期</text>
+  <rect x="60" y="130" width="280" height="32" rx="8" fill="#f7f8fa" stroke="#e0e0e0"/>
+  <text x="70" y="152" font-size="14" font-family="-apple-system,Arial" fill="#bbb">2025/04/27</text>
+  <text x="60" y="180" font-size="16" font-family="-apple-system,Arial" fill="#444">优先级</text>
+  <rect x="60" y="190" width="280" height="32" rx="8" fill="#f7f8fa" stroke="#e0e0e0"/>
+  <text x="70" y="212" font-size="14" font-family="-apple-system,Arial" fill="#bbb">高</text>
+  <text x="60" y="240" font-size="16" font-family="-apple-system,Arial" fill="#444">状态</text>
+  <rect x="60" y="250" width="280" height="32" rx="8" fill="#f7f8fa" stroke="#e0e0e0"/>
+  <text x="70" y="272" font-size="14" font-family="-apple-system,Arial" fill="#bbb">未完成</text>
+  <rect x="70" y="300" width="110" height="36" rx="16" fill="url(#paint0_linear)"/>
+  <text x="125" y="324" text-anchor="middle" font-size="16" font-family="-apple-system,Arial" font-weight="bold" fill="#fff">应用筛选</text>
+  <rect x="220" y="300" width="110" height="36" rx="16" fill="#f0f0f0"/>
+  <text x="275" y="324" text-anchor="middle" font-size="16" font-family="-apple-system,Arial" font-weight="bold" fill="#43e97b">清除筛选</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="70" y1="300" x2="180" y2="336" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#43e97b"/>
+      <stop offset="1" stop-color="#38f9d7"/>
+    </linearGradient>
+  </defs>
+</svg> 
