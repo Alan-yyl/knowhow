@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件化测试</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            background: #f5f5f5;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #3c4a60;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #2c3a50;
+        }
+        .log {
+            background: #f0f0f0;
+            border-left: 3px solid #3c4a60;
+            padding: 10px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>纳瓦尔宝典 - 组件化测试</h1>
+    
+    <div class="test-section">
+        <h2>测试页面组件加载</h2>
+        <p>点击按钮测试每个页面的组件加载情况</p>
+        
+        <button onclick="testPage('纳瓦尔宝典-笔记.html')">测试第1页</button>
+        <button onclick="testPage('纳瓦尔宝典-笔记2.html')">测试第2页</button>
+        <button onclick="testPage('纳瓦尔宝典-笔记3.html')">测试第3页</button>
+        
+        <div class="log" id="testLog"></div>
+        <div class="result" id="testResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>调试控制台</h2>
+        <p>请在浏览器控制台查看完整调试信息</p>
+        <button onclick="window.open('纳瓦尔宝典-笔记.html')">打开第1页</button>
+        <button onclick="console.clear()">清除控制台</button>
+    </div>
+    
+    <script>
+        function log(message) {
+            const logEl = document.getElementById('testLog');
+            const now = new Date();
+            const time = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+            logEl.innerHTML += `[${time}] ${message}<br>`;
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+        
+        function setResult(message, isSuccess) {
+            const resultEl = document.getElementById('testResult');
+            resultEl.innerHTML = message;
+            resultEl.className = 'result ' + (isSuccess ? 'success' : 'error');
+        }
+        
+        function testPage(url) {
+            log(`开始测试页面: ${url}`);
+            setResult('测试中...', true);
+            
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.onload = function() {
+                log('页面加载完成，检查组件');
+                
+                try {
+                    // 检查页面是否有article-container
+                    const hasContainer = iframe.contentDocument.querySelector('.article-container') !== null;
+                    log(hasContainer ? '✓ 找到页面容器' : '✗ 未找到页面容器');
+                    
+                    // 检查页面是否有creator-info
+                    const hasCreatorInfo = iframe.contentDocument.querySelector('.creator-info') !== null;
+                    log(hasCreatorInfo ? '✓ 找到作者信息' : '✗ 未找到作者信息');
+                    
+                    // 检查页面是否有页脚
+                    const hasFooter = iframe.contentDocument.querySelector('.footer') !== null;
+                    log(hasFooter ? '✓ 找到页脚' : '✗ 未找到页脚');
+                    
+                    if (hasContainer && hasCreatorInfo && hasFooter) {
+                        setResult(`${url} 组件加载成功!`, true);
+                    } else {
+                        setResult(`${url} 组件加载失败`, false);
+                    }
+                } catch (error) {
+                    log(`测试出错: ${error.message}`);
+                    setResult(`${url} 测试出错`, false);
+                }
+                
+                // 清理iframe
+                document.body.removeChild(iframe);
+            };
+            
+            iframe.onerror = function() {
+                log('页面加载出错');
+                setResult(`${url} 加载失败`, false);
+                document.body.removeChild(iframe);
+            };
+            
+            document.body.appendChild(iframe);
+            iframe.src = url;
+        }
+    </script>
+</body>
+</html>
