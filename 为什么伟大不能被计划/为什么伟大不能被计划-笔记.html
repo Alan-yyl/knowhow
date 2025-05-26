@@ -65,6 +65,23 @@
             height: 100px;
             z-index: 3;
         }
+        
+        /* 修改笔记条目样式，增加◆符号和文字之间的间距 */
+        .note-item {
+            margin-bottom: 24px;
+            font-size: 28px;
+            line-height: 1.6;
+            position: relative;
+            padding-left: 38px; /* 增加左侧内边距 */
+        }
+        
+        .note-item:before {
+            content: "◆";
+            position: absolute;
+            left: 0;
+            color: #3c4a60;
+            margin-right: 10px; /* 增加◆符号与文字的间距 */
+        }
     </style>
 </head>
 <body>
