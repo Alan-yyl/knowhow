@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为什么伟大不能被计划 - 读书笔记</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="nav-control.js"></script>
+    <style>
+        .header-section {
+            display: flex;
+            margin: 40px 0;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        .cover-image {
+            width: 250px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .header-info {
+            flex: 1;
+            padding-left: 40px;
+        }
+        
+        .header-title {
+            font-size: 46px;
+            font-weight: 600;
+            color: #3c4a60;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        
+        .header-subtitle {
+            font-size: 22px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+        
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #f5f7f5;
+            border-radius: 8px;
+        }
+        
+        .meta-icon {
+            font-size: 22px;
+            margin-right: 10px;
+            color: #a8b3a8;
+        }
+        
+        .meta-text {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .meta-value {
+            font-weight: 500;
+            color: #3c4a60;
+        }
+        
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .tag {
+            background-color: #f5f0e8;
+            color: #3c4a60;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .tag:hover {
+            background-color: #e9e1d6;
+            transform: translateY(-2px);
+        }
+        
+        .progress-section {
+            margin: 30px 0;
+            padding: 15px 20px;
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .progress-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #3c4a60;
+        }
+        
+        .progress-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #3c4a60;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #e6e6e6;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 25%;
+            background: linear-gradient(to right, #a8b3a8, #c1cec1);
+            border-radius: 10px;
+        }
+        
+        .butterfly-decoration {
+            position: absolute;
+            top: -10px;
+            right: -15px;
+            width: 80px;
+            height: 80px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="article-container">
+        <div class="content-wrapper">
+            <!-- 封面和标题区域 -->
+            <div class="header-section">
+                <img src="原书封面.jpg" alt="为什么伟大不能被计划 - 封面" class="cover-image">
+                
+                <div class="header-info">
+                    <h1 class="header-title">为什么伟大不能被计划</h1>
+                    <p class="header-subtitle">对创意、创新和创造的自由探索</p>
+                    
+                    <!-- 标签区域 -->
+                    <div class="tags-container">
+                        <div class="tag">#创新</div>
+                        <div class="tag">#创意</div>
+                        <div class="tag">#成功学</div>
+                        <div class="tag">#人生规划</div>
+                    </div>
+                    
+                    <!-- 元数据网格 -->
+                    <div class="meta-grid">
+                        <div class="meta-item">
+                            <span class="meta-icon">✍️</span>
+                            <div class="meta-text">作者: <span class="meta-value">肯尼斯·斯坦利, 乔尔·雷曼</span></div>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">⏱️</span>
+                            <div class="meta-text">阅读时长: <span class="meta-value">10 mins</span></div>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">📚</span>
+                            <div class="meta-text">分类: <span class="meta-value">科学思维</span></div>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">📅</span>
+                            <div class="meta-text">创建于: <span class="meta-value">2023年11月</span></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 蝴蝶装饰 -->
+                <svg class="butterfly-decoration" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#a8b3a8" d="M50,20 C60,10 75,5 85,15 C95,25 90,40 80,50 C70,60 60,65 50,60 C40,65 30,60 20,50 C10,40 5,25 15,15 C25,5 40,10 50,20 Z"/>
+                    <path fill="none" stroke="#a8b3a8" stroke-width="1.5" d="M50,60 C50,70 50,80 50,90"/>
+                    <path fill="none" stroke="#a8b3a8" stroke-width="1" d="M45,15 C42,10 40,5 38,0 M55,15 C58,10 60,5 62,0"/>
+                    <path fill="none" stroke="#a8b3a8" stroke-width="1" d="M30,40 C35,45 40,48 50,50 M70,40 C65,45 60,48 50,50" stroke-dasharray="2,1"/>
+                </svg>
+            </div>
+            
+            <!-- 阅读进度 -->
+            <div class="progress-section">
+                <div class="progress-header">
+                    <span class="progress-title">阅读进度</span>
+                    <span class="progress-value">25% 已读</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+            
+            <h2 class="chapter-title">第一章 对目标的质疑</h2>
+            
+            <div class="note-item">在某种程度上，我们不得不相信目标的意义，才能允许它主导我们生活的方方面面。但背后的原因也可能恰恰相反，即我们已经太习惯于通过"目标"来界定所有的努力，甚至忘了我们可以去质疑目标的价值。</div>
+            
+            <div class="note-item">我们只希望在本书中，强调一条异于常规的、不以目标为导向的成功之路。</div>
+            
+            <div class="note-item">优化理论中有一个很恰当的词，被一些科学家用于描述这种概念，即通过测量来帮助决定下一步的行动——他们称之为"梯度"，它本质上被当成判别方向对错的一种线索。</div>
+            
+            <div class="quote-container">
+                <div class="quote">"若目标设置得足够适度，它就会起到积极作用；反之，目标越'高大上'，情况就越复杂。事实上，若想实现更多所谓的丰功伟业，目标往往会成为绊脚石。"</div>
+            </div>
+
+            <!-- 专门用于展示的空白行 -->
+            <div class="spacer-for-screenshot"></div>
+            
+            <!-- 在截图时不显示的内容 -->
+            <div class="content-beyond-screenshot">
+                <div class="note-item">当最伟大的成就被设定为目标时，其实现的可能性就近乎渺茫了。不仅如此，这个悖论还得出了一个非常奇怪的结论——如果此悖论真的成立，那么实现宏图大业的最佳道路，就是压根不设立目标。</div>
+            </div>
+            
+        </div>
+        
+        <div class="creator-info">
+            <div class="creator-left">
+                <div class="creator-logo">Y</div>
+                <div class="creator-text">由 <span class="creator-name">Yaron</span> 制作 | 代码沉思录</div>
+            </div>
+            <div class="pagination" id="page-nav">
+                <a href="为什么伟大不能被计划-笔记2.html">下一页 →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
