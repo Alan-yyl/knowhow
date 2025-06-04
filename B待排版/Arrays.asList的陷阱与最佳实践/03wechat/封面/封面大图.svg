@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="900" height="383" viewBox="0 0 900 383" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义渐变和滤镜 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4568dc" />
+      <stop offset="100%" stop-color="#b06ab3" />
+    </linearGradient>
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+      <feOffset dx="2" dy="2" result="offsetblur" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.4" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF9966" />
+      <stop offset="100%" stop-color="#FF5E62" />
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
+    </filter>
+  </defs>
+  
+  <!-- 主背景 -->
+  <rect width="900" height="383" fill="url(#bgGradient)" />
+  
+  <!-- 装饰几何图形 -->
+  <g opacity="0.1">
+    <circle cx="100" cy="100" r="80" fill="white" />
+    <rect x="700" y="50" width="150" height="150" rx="20" fill="white" />
+    <polygon points="450,330 500,280 550,330" fill="white" />
+  </g>
+  
+  <!-- 中心图形元素 -->
+  <g transform="translate(450, 200)">
+    <!-- 外环 -->
+    <circle cx="0" cy="0" r="120" fill="none" stroke="white" stroke-width="6" opacity="0.3" />
+    
+    <!-- 数组到列表的转换图形 -->
+    <g transform="translate(-180, -40)">
+      <!-- 数组符号 -->
+      <rect x="0" y="0" width="80" height="80" rx="5" fill="#FF9966" filter="url(#glow)" />
+      <rect x="10" y="10" width="60" height="60" rx="3" fill="none" stroke="white" stroke-width="3" />
+      <line x1="10" y1="30" x2="70" y2="30" stroke="white" stroke-width="3" />
+      <line x1="10" y1="50" x2="70" y2="50" stroke="white" stroke-width="3" />
+    </g>
+    
+    <!-- 转换箭头 -->
+    <g>
+      <path d="M -80, 0 L 80, 0" stroke="white" stroke-width="4" stroke-linecap="round" />
+      <path d="M 60, -20 L 80, 0 L 60, 20" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    
+    <!-- 列表符号 -->
+    <g transform="translate(180, -40)">
+      <rect x="-80" y="0" width="80" height="80" rx="40" fill="#36D1DC" filter="url(#glow)" />
+      <circle cx="-40" cy="40" r="30" fill="none" stroke="white" stroke-width="3" />
+      <line x1="-60" y1="40" x2="-20" y2="40" stroke="white" stroke-width="3" />
+      <line x1="-40" y1="20" x2="-40" y2="60" stroke="white" stroke-width="3" />
+    </g>
+    
+    <!-- 陷阱符号 -->
+    <g transform="translate(0, 40)">
+      <polygon points="0,-30 35,30 -35,30" fill="#FF5E62" filter="url(#glow)" />
+      <text x="0" y="15" font-family="Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="white">!</text>
+    </g>
+  </g>
+  
+  <!-- 标题 -->
+  <g transform="translate(450, 70)">
+    <text font-family="Arial, sans-serif" font-size="42" font-weight="bold" text-anchor="middle" fill="white" filter="url(#dropShadow)">
+      Arrays.asList的陷阱
+    </text>
+    <text font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle" fill="white" filter="url(#dropShadow)" y="45">
+      与最佳实践
+    </text>
+  </g>
+  
+  <!-- 副标题 -->
+  <g transform="translate(450, 340)">
+    <text font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white" opacity="0.9">
+      避开使用陷阱，掌握安全用法
+    </text>
+  </g>
+</svg> 

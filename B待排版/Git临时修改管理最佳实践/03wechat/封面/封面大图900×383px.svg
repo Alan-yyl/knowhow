@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="900" height="383" viewBox="0 0 900 383" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义渐变和滤镜 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2b3137" />
+      <stop offset="100%" stop-color="#1b262c" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f05033" />
+      <stop offset="100%" stop-color="#f78166" />
+    </linearGradient>
+    <linearGradient id="branchGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7bc96f" />
+      <stop offset="100%" stop-color="#57a73f" />
+    </linearGradient>
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+      <feOffset dx="2" dy="2" result="offsetblur" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.4" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
+    </filter>
+  </defs>
+  
+  <!-- 主背景 -->
+  <rect width="900" height="383" fill="url(#bgGradient)" />
+  
+  <!-- 装饰几何图形 -->
+  <g opacity="0.1">
+    <circle cx="150" cy="100" r="80" fill="white" />
+    <rect x="700" y="50" width="150" height="150" rx="20" fill="white" />
+    <polygon points="450,330 500,280 550,330" fill="white" />
+  </g>
+  
+  <!-- Git分支和修改管理的抽象表示 -->
+  <g transform="translate(450, 200)">
+    <!-- 主干 -->
+    <line x1="-200" y1="0" x2="200" y2="0" stroke="#6e7681" stroke-width="6" stroke-linecap="round" />
+    
+    <!-- 提交点 -->
+    <circle cx="-150" cy="0" r="15" fill="#6e7681" />
+    <circle cx="-50" cy="0" r="15" fill="#6e7681" />
+    <circle cx="50" cy="0" r="15" fill="#6e7681" />
+    <circle cx="150" cy="0" r="15" fill="#6e7681" />
+    
+    <!-- 临时修改分支 - 被暂存/忽略的修改 -->
+    <g transform="translate(50, 0)">
+      <path d="M 0,0 C 20,-20 40,-60 60,-60" stroke="url(#accentGradient)" stroke-width="4" fill="none" stroke-linecap="round" />
+      <circle cx="60" cy="-60" r="12" fill="url(#accentGradient)" filter="url(#glow)" />
+      
+      <!-- 暂存/忽略的视觉表示 -->
+      <g transform="translate(60, -60)">
+        <rect x="-25" y="-25" width="50" height="50" rx="5" fill="none" stroke="white" stroke-width="2" stroke-dasharray="5,5" />
+        <text x="0" y="5" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="white">?</text>
+      </g>
+    </g>
+    
+    <!-- 正常提交的分支 -->
+    <g transform="translate(-50, 0)">
+      <path d="M 0,0 C 20,-20 40,-40 60,-40" stroke="url(#branchGradient)" stroke-width="4" fill="none" stroke-linecap="round" />
+      <circle cx="60" cy="-40" r="12" fill="url(#branchGradient)" />
+      
+      <!-- 正常提交的视觉表示 -->
+      <g transform="translate(60, -40)">
+        <circle cx="0" cy="0" r="20" fill="none" stroke="white" stroke-width="2" />
+        <text x="0" y="5" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="white">✓</text>
+      </g>
+    </g>
+    
+    <!-- 临时修改标识 -->
+    <g transform="translate(0, 70)">
+      <rect x="-100" y="-20" width="200" height="40" rx="20" fill="url(#accentGradient)" opacity="0.8" />
+      <text x="0" y="5" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">临时修改管理</text>
+    </g>
+  </g>
+  
+  <!-- 标题 -->
+  <g transform="translate(450, 70)">
+    <text font-family="Arial, sans-serif" font-size="42" font-weight="bold" text-anchor="middle" fill="white" filter="url(#dropShadow)">
+      Git临时修改管理
+    </text>
+    <text font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle" fill="white" filter="url(#dropShadow)" y="45">
+      最佳实践
+    </text>
+  </g>
+  
+  <!-- 副标题 -->
+  <g transform="translate(450, 340)">
+    <text font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white" opacity="0.9">
+      掌握本地修改，提高工作效率
+    </text>
+  </g>
+</svg> 
