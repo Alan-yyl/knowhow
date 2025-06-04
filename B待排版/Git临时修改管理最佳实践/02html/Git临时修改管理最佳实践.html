@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git临时修改管理最佳实践</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Serif+SC:wght@400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: "Noto Serif SC", serif;
+      background-color: #f5f5f7;
+    }
+    
+    .page-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    /* 封面样式 */
+    .cover-container {
+      width: 1080px;
+      height: 1440px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px;
+      margin-bottom: 30px;
+    }
+    
+    .cover-title {
+      font-family: "Roboto", sans-serif;
+      font-size: 84px;
+      color: #3c4a60;
+      text-align: center;
+      margin-bottom: 40px;
+      line-height: 1.2;
+      max-width: 90%;
+      font-weight: 700;
+    }
+    
+    .cover-subtitle {
+      font-size: 36px;
+      color: #666;
+      text-align: center;
+      margin-bottom: 60px;
+      max-width: 80%;
+      line-height: 1.4;
+    }
+    
+    .cover-decoration {
+      margin: 40px 0;
+      width: 200px;
+      height: 5px;
+      background: linear-gradient(90deg, transparent, #f8d8bd, transparent);
+      border-radius: 3px;
+    }
+    
+    .cover-footer {
+      position: absolute;
+      bottom: 60px;
+      width: calc(100% - 120px);
+      text-align: center;
+      font-size: 28px;
+      color: #3c4a60;
+    }
+    
+    .cover-logo {
+      margin-bottom: 30px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #3c4a60;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      font-size: 36px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    /* 内容页样式 */
+    .article-container {
+      width: 1080px;
+      min-height: 1440px;
+      position: relative;
+      overflow: hidden;
+      background-color: white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 30px;
+    }
+    
+    .content-wrapper {
+      flex: 1;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    
+    .title {
+      margin: 0 0 40px 0;
+      font-family: "Roboto", sans-serif;
+      font-size: 48px;
+      color: #3c4a60;
+      font-weight: bold;
+      line-height: 1.3;
+      border-bottom: 3px solid #f8d8bd;
+      padding-bottom: 15px;
+      text-align: center;
+    }
+    
+    h2 {
+      font-family: "Roboto", sans-serif;
+      font-size: 36px;
+      color: #3c4a60;
+      margin: 32px 0 24px 0;
+      font-weight: 500;
+      border-bottom: 2px solid #f8d8bd;
+      padding-bottom: 10px;
+    }
+    
+    h3 {
+      font-family: "Roboto", sans-serif;
+      font-size: 30px;
+      color: #3c4a60;
+      margin: 24px 0 16px 0;
+      font-weight: 500;
+    }
+    
+    p {
+      margin-bottom: 24px;
+      font-size: 28px;
+      line-height: 1.6;
+      text-align: justify;
+    }
+    
+    blockquote {
+      margin: 30px 0;
+      padding: 20px 30px;
+      background-color: #f7f7f7;
+      border-left: 5px solid #f8d8bd;
+      font-style: italic;
+    }
+    
+    blockquote p {
+      margin-bottom: 0;
+    }
+    
+    ul, ol {
+      margin-bottom: 24px;
+      padding-left: 30px;
+    }
+    
+    li {
+      margin-bottom: 16px;
+      font-size: 28px;
+      line-height: 1.5;
+    }
+    
+    code {
+      font-family: "Source Code Pro", monospace;
+      background-color: #f0f0f0;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 24px;
+    }
+    
+    pre {
+      background-color: #f0f0f0;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-bottom: 24px;
+    }
+    
+    pre code {
+      background-color: transparent;
+      padding: 0;
+      font-size: 24px;
+      line-height: 1.5;
+    }
+    
+    .decorative-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 30px 0;
+    }
+    
+    .decorative-divider::before,
+    .decorative-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(60, 74, 96, 0.2), transparent);
+    }
+    
+    .decorative-divider span {
+      margin: 0 15px;
+      color: rgba(60, 74, 96, 0.4);
+      font-size: 20px;
+    }
+    
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin: 20px 0;
+    }
+    
+    .image-caption {
+      text-align: center;
+      font-size: 24px;
+      color: #666;
+      margin-top: -10px;
+      margin-bottom: 20px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+    }
+    
+    table th {
+      background-color: #3c4a60;
+      color: white;
+      padding: 10px;
+      text-align: left;
+    }
+    
+    table td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    
+    .creator-info {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      padding: 0 60px;
+      background-color: white;
+      border-top: 1px solid rgba(60, 74, 96, 0.1);
+      margin-top: auto;
+    }
+    
+    .creator-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #3c4a60;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 20px;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    }
+    
+    .creator-text {
+      font-size: 24px;
+      color: #666;
+      letter-spacing: 0.02em;
+    }
+    
+    .creator-name {
+      font-weight: 600;
+      color: #3c4a60;
+      position: relative;
+      padding-bottom: 2px;
+      display: inline-block;
+    }
+    
+    .creator-name::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: rgba(60, 74, 96, 0.2);
+    }
+    
+    .illustration {
+      width: 100%;
+      margin: 30px 0;
+      padding: 20px;
+      border: 1px solid rgba(60, 74, 96, 0.1);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      background-color: #fff;
+      overflow: hidden;
+    }
+    
+    .illustration-caption {
+      text-align: center;
+      font-size: 24px;
+      margin-top: 15px;
+      color: #666;
+      font-style: italic;
+    }
+    
+    /* 打印和截图优化 */
+    @media print {
+      .page-container {
+        padding: 0;
+      }
+      
+      .cover-container,
+      .article-container {
+        box-shadow: none;
+        margin: 0;
+        page-break-after: always;
+      }
+    }
+    
+    /* 响应式支持 */
+    @media screen and (max-width: 1100px) {
+      .cover-container,
+      .article-container {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <!-- 封面部分 -->
+    <div class="cover-container">
+      <h1 class="cover-title">Git临时修改管理最佳实践</h1>
+      
+      <div class="cover-decoration"></div>
+      
+      <p class="cover-subtitle">如何正确管理已跟踪文件的临时修改，防止意外提交到远程仓库</p>
+      
+      <div class="cover-footer">
+        <div class="cover-logo">Y</div>
+        <div>由 <strong>Yaron</strong> 代码沉思录 | 制作</div>
+      </div>
+    </div>
+    
+    <!-- 内容部分 -->
+    <div class="article-container">
+      <div class="content-wrapper">
+        <h1 class="title">Git临时修改管理最佳实践</h1>
+        
+        <h2>问题描述</h2>
+        
+        <p>在团队开发中，我们经常会遇到这样的场景：需要对某些文件（如配置文件、依赖管理文件等）进行本地修改，但不希望这些修改被提交到远程仓库。典型的例子包括：</p>
+        
+        <ul>
+          <li>本地开发环境的配置文件</li>
+          <li>特定于开发者的IDE配置</li>
+          <li>临时修改的依赖版本（如<code>pom.xml</code>）</li>
+          <li>包含敏感信息的文件</li>
+        </ul>
+        
+        <p><strong>使用<code>.gitignore</code>文件是一种常见的方法，但它只对未被Git跟踪的文件有效。对于已经被Git跟踪的文件，<code>.gitignore</code>不会阻止其变更被提交。</strong></p>
+        
+        <h2>解决方案</h2>
+        
+        <p>以下是几种管理已跟踪文件的临时修改的方法：</p>
+        
+        <h3>1. 使用 git update-index --skip-worktree</h3>
+        
+        <p>这是处理本地配置文件的理想选择。它告诉Git暂时忽略对文件的跟踪，允许你进行本地修改而不会被Git检测到。</p>
+        
+        <pre><code class="language-bash"># 忽略对文件的跟踪
+git update-index --skip-worktree pom.xml
+
+# 恢复跟踪
+git update-index --no-skip-worktree pom.xml</code></pre>
+        
+        <p><strong>优点</strong>：</p>
+        <ul>
+          <li>专为配置文件设计</li>
+          <li>修改不会出现在<code>git status</code>中</li>
+          <li>不会被意外提交</li>
+        </ul>
+        
+        <p><strong>缺点</strong>：</p>
+        <ul>
+          <li>如果远程有对该文件的更新，你需要先恢复跟踪才能拉取更新</li>
+        </ul>
+        
+        <div class="decorative-divider"><span>•</span></div>
+        
+        <h3>2. 使用 git stash 暂存修改</h3>
+        
+        <p>适用于临时修改的场景，特别是当你需要切换分支但不想提交当前修改时。</p>
+        
+        <pre><code class="language-bash"># 暂存特定文件的修改
+git stash push -m "临时修改pom.xml" pom.xml
+
+# 恢复暂存的修改
+git stash pop</code></pre>
+        
+        <p><strong>优点</strong>：</p>
+        <ul>
+          <li>非常灵活，可以随时应用或丢弃修改</li>
+          <li>可以带注释，便于管理多个stash</li>
+        </ul>
+        
+        <p><strong>缺点</strong>：</p>
+        <ul>
+          <li>需要手动管理stash</li>
+          <li>如果忘记pop，可能会丢失修改</li>
+        </ul>
+        
+        <div class="decorative-divider"><span>•</span></div>
+        
+        <h3>3. 在提交时手动取消选择</h3>
+        
+        <p>最简单的方法，使用Git客户端的UI功能在提交时取消选择不想提交的文件。</p>
+        
+        <p><strong>优点</strong>：</p>
+        <ul>
+          <li>简单直观，无需记忆命令</li>
+          <li>灵活，可以按需选择</li>
+        </ul>
+        
+        <p><strong>缺点</strong>：</p>
+        <ul>
+          <li>容易忘记取消选择</li>
+          <li>依赖于Git客户端的UI功能</li>
+        </ul>
+        
+        <h2>最佳实践建议</h2>
+        
+        <ol>
+          <li><strong>对于配置文件</strong>：使用<code>git update-index --skip-worktree</code></li>
+          <li><strong>对于临时修改</strong>：使用<code>git stash</code></li>
+          <li><strong>对于新添加的不想跟踪的文件</strong>：使用<code>.gitignore</code></li>
+        </ol>
+        
+        <h2>项目中的实际案例</h2>
+        
+        <p>在我们的项目中，我们需要对<code>pom.xml</code>进行本地修改，但不希望这些修改被提交到远程仓库。尝试将其添加到<code>.gitignore</code>文件中，但发现Git仍然跟踪它的变更。</p>
+        
+        <h3>解决方案</h3>
+        
+        <p>使用<code>git update-index --skip-worktree</code>命令：</p>
+        
+        <pre><code class="language-bash">git update-index --skip-worktree pom.xml</code></pre>
+        
+        <p>这样，我们可以自由地修改<code>pom.xml</code>文件，而Git不会检测到这些修改，也不会将其包含在提交中。</p>
+        
+        <p>当需要拉取远程对<code>pom.xml</code>的更新时，我们可以：</p>
+        
+        <pre><code class="language-bash"># 恢复跟踪
+git update-index --no-skip-worktree pom.xml
+
+# 拉取更新
+git pull
+
+# 再次忽略跟踪
+git update-index --skip-worktree pom.xml</code></pre>
+        
+        <h2>总结</h2>
+        
+        <p>Git提供了多种方法来管理已跟踪文件的临时修改。选择合适的方法取决于你的具体需求和工作流程。对于配置文件和依赖管理文件等常见场景，<code>git update-index --skip-worktree</code>通常是最佳选择。</p>
+        
+        <p>记住，<code>.gitignore</code>只对未跟踪的文件有效，对于已跟踪的文件，需要使用本文介绍的其他方法。</p>
+        
+      </div>
+      
+      <div class="creator-info">
+        <div class="creator-logo">Y</div>
+        <div class="creator-text">由 <span class="creator-name">Yaron</span> 代码沉思录 | 制作</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 如需Mermaid图表，添加脚本 -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/mermaid/10.5.0/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      flowchart: { curve: 'basis' },
+      securityLevel: 'loose'
+    });
+  </script>
+</body>
+</html> 
